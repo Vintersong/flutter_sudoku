@@ -9,17 +9,22 @@ class GridSandboxScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Center(
         child: Column(
+          spacing: 2,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(3, (row) {
+          children: List.generate(9, (row) {
             return Row(
+              spacing: 2,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(3, (col) {
+              children: List.generate(9, (col) {
                 return Container(
-                  width: 50,
-                  height: 50,
+                  width: 44,
+                  height: 44,
                   decoration: BoxDecoration(
-                    color: Colors.red,
-                    border: Border.all(color: Colors.white, width: 2),
+                    color: const Color.fromARGB(25, 255, 251, 10),
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 240, 0, 60),
+                      width: 1.5,
+                    ),
                   ),
                 );
               }),
