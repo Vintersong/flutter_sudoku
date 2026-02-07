@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/theme.dart';
-import 'screens/home_screen.dart';
+import 'screens/grid_sandbox_screen.dart';
 
 void main() {
   runApp(const CyberSudokuApp());
@@ -14,7 +14,7 @@ class CyberSudokuApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cyber Sudoku',
       theme: CyberpunkTheme.theme,
-      home: const HomeScreen(),
+      home: const GridSandboxScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -20,9 +20,12 @@ class SudokuGame extends FlameGame {
     const double cellSize = 50.0;
     const double gap = 2.0;
     const double blockGap = 4.0;
-    const double totalGridSize = (cellSize * 9) + (gap * 6) + (blockGap * 2);
+    const double blockSize = cellSize * 3 + gap * 2; // 154
+    const double borderExtension = gap; // Borders extend by gap on each side
+    const double totalGridSize =
+        blockSize * 3 + blockGap * 2 + borderExtension * 2; // 474
 
-    allCells = List.generate(9, (_) => List.filled(9, null as dynamic));
+    allCells = List.generate(9, (_) => <CellComponent>[]);
     blocks = [];
 
     for (int br = 0; br < 3; br++) {
@@ -60,16 +63,17 @@ class SudokuGame extends FlameGame {
   }
 
   void _populateCellReferences() {
-    // We delay this or manually create them?
-    // Actually, let's have blocks expose their cells after onLoad or create them synchronously.
-    // I'll update SudokuBlock to create cells in constructor/init for sync access if needed.
-    // For now, I'll just rely on the fact that blocks have their cells after they are added.
-    for (var block in blocks) {
-      for (int r = 0; r < 3; r++) {
-        for (int c = 0; c < 3; c++) {
-          allCells[block.blockRow * 3 + r][block.blockCol * 3 + c] =
-              block.cells[r][c];
-        }
+    // Build the 9x9 grid from blocks
+    // We need to iterate in row-major order to build allCells correctly
+    for (int globalRow = 0; globalRow < 9; globalRow++) {
+      for (int globalCol = 0; globalCol < 9; globalCol++) {
+        final blockRow = globalRow ~/ 3;
+        final blockCol = globalCol ~/ 3;
+        final localRow = globalRow % 3;
+        final localCol = globalCol % 3;
+
+        final block = blocks[blockRow * 3 + blockCol];
+        allCells[globalRow].add(block.cells[localRow][localCol]);
       }
     }
   }
@@ -86,7 +90,11 @@ class SudokuGame extends FlameGame {
     super.onGameResize(size);
     const double cellSize = 50.0;
     const double gap = 2.0;
-    const double totalGridSize = cellSize * 9 + gap * 8;
+    const double blockGap = 4.0;
+    const double blockSize = cellSize * 3 + gap * 2;
+    const double borderExtension = gap;
+    const double totalGridSize =
+        blockSize * 3 + blockGap * 2 + borderExtension * 2;
     _updateZoom(totalGridSize);
   }
 
