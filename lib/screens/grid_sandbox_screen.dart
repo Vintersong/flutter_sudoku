@@ -5,12 +5,26 @@ class GridSandboxScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Text(
-          'BLANK CANVAS',
-          style: TextStyle(color: Colors.cyan, fontSize: 24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(3, (row) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(3, (col) {
+                return Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+                );
+              }),
+            );
+          }),
         ),
       ),
     );
